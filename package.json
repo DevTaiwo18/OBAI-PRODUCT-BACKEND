@@ -1,0 +1,73 @@
+{
+    "name": "ropstam-api-boilerplate",
+    "version": "1.0.0",
+    "description": "APIs",
+    "main": "server.js",
+    "engines": {
+        "node": ">=12.6.0"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "lint": "eslint . --ext .js --report-unused-disable-directives --max-warnings 0",
+        "lint:fix": "eslint . --ext .js --fix",
+        "prepare": "husky install && npx husky add .husky/pre-commit \"npx lint-staged\"",
+        "prettier": "prettier --write"
+    },
+    "keywords": [],
+    "author": "Ropstam Soln Pvt ltd.",
+    "license": "ISC",
+    "dependencies": {
+        "@google-cloud/vertexai": "^1.1.0",
+        "@sendgrid/mail": "^8.1.0",
+        "axios": "^1.6.3",
+        "bcrypt": "^5.1.1",
+        "celebrate": "^15.0.3",
+        "cors": "^2.8.5",
+        "date-fns": "^3.0.6",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-compression": "^1.0.2",
+        "express-end": "0.0.8",
+        "express-mongo-sanitize": "^2.2.0",
+        "express-rate-limit": "^7.1.5",
+        "express-winston": "^4.2.0",
+        "helmet": "^7.1.0",
+        "husky": "^8.0.3",
+        "jsonwebtoken": "^9.0.2",
+        "lint-staged": "^15.2.0",
+        "mongoose": "^8.0.3",
+        "multer": "^1.4.5-lts.1",
+        "node-cron": "^3.0.3",
+        "nodemailer": "^6.9.7",
+        "performance-now": "^2.1.0",
+        "request-ip": "^3.3.0",
+        "winston": "^3.11.0",
+        "winston-daily-rotate-file": "^4.7.1",
+        "xss-clean": "^0.1.4"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-standard": "^17.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-mongodb": "^1.0.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^5.1.2",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-security": "^2.1.0",
+        "nodemon": "^3.0.2",
+        "prettier": "^3.1.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "eslint --cache --fix",
+            "prettier --write"
+        ]
+    }
+}
