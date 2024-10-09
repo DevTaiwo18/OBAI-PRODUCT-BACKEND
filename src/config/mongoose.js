@@ -3,28 +3,30 @@ const config = require('./config');
 const cluster = require('cluster');
 const INITIALIZE = require('../helpers/initialize');
 
-const {
-    server: { mongoHost, mongoPort, db, poolSize }
-} = config;
-
-const mongoUrl = `mongodb://${mongoHost}:${mongoPort}/${db}?maxPoolSize=${poolSize}`;
+// Extract environment variables for MongoDB connection
+const { server: { mongoURI } } = config;
 
 // Making MongoDB Connection using mongoose
 exports.connect = () => {
     mongoose.set('strictQuery', true);
-    mongoose
-        .connect(mongoUrl)
-        .then(() => {
-            if (cluster.isMaster) console.log('Successfully connected to mongo database');
 
-            // Create admin for the first time when not exist
+    // Use MongoDB URI from environment variables (MongoDB Atlas or local MongoDB)
+    mongoose
+        .connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true // Remove poolSize
+        })
+        .then(() => {
+            if (cluster.isMaster) {
+                console.log('Successfully connected to MongoDB database');
+            }
+
+            // Initialize admin or other first-time setups if necessary
             INITIALIZE();
         })
         .catch((error) => {
-            console.log('Mongo connection failed. exiting now...');
+            console.log('MongoDB connection failed. Exiting now...');
             console.error(error);
-            /* eslint-disable */
-            process.exit(1);
-            /* eslint-disable */
+            process.exit(1); // Exit the application if unable to connect
         });
 };
