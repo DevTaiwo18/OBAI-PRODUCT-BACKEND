@@ -12,10 +12,7 @@ exports.connect = () => {
 
     // Use MongoDB URI from environment variables (MongoDB Atlas or local MongoDB)
     mongoose
-        .connect(mongoURI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true // Remove poolSize
-        })
+        .connect(mongoURI)  // Removed deprecated options
         .then(() => {
             if (cluster.isMaster) {
                 console.log('Successfully connected to MongoDB database');
